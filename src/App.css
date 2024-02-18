@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  padding: 20px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav_heading {
+  font-size: 30px;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.nav_button {
+  background-color: #2652ee;
+  padding: 6px 14px;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/* hero section start */
+.hero_section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 22px;
+  box-shadow: 2px 2px 5px #aaa1a1;
+  background: rgb(255, 255, 255);
+}
+
+.input_title,
+.category,
+.status {
+  width: 30%;
+}
+
+.input_title h3,
+.category h3,
+.status h3 {
+  margin-bottom: 5px;
+}
+
+.input_field,
+select {
+  width: calc(100% - 20px);
+  padding: 5px;
+  border-radius: 5px;
+}
+.input_field {
+  width: calc(100% - 20px);
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: transparent;
+}
+.search {
+  background-color: #2652ee;
+  padding: 6px 14px;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+/* main section start */
+.main_section {
+  border-radius: 10px;
+  margin-top: 22px;
+  box-shadow: 2px 2px 5px #aaa1a1;
+  background: rgb(255, 255, 255);
+  padding: 10px;
+}
+
+.main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.summary_title {
+  font-size: medium;
+  margin-bottom: 10px;
+}
+
+.summary_select {
+  width: 40%;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.summary_label {
+  margin-right: 10px;
+}
+
+.summary_btn {
+  background-color: #2652ee;
+  padding: 6px 14px;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.below_section {
+  margin-top: 9px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination_btn {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.pagination_btn input[type="checkbox"] {
+  margin-right: 5px;
+}
+
+.pagination_btn label {
+  margin-right: 10px;
+}
+
+.pagination_btn span {
+  white-space: nowrap;
+}
+
+.pagination_btn.active {
+  background-color: #2652ee;
+  color: white;
+}
