@@ -1,7 +1,5 @@
 import { useState } from "react";
 import "./App.css";
-import { useEffect } from "react";
-import axios from "axios";
 import OrderSummary from "./components/OrderSummary";
 import NewOrderForm from "./components/NewOrderFrom";
 
@@ -20,21 +18,7 @@ function App() {
     orderType: "",
   });
   const [showForm, setShowForm] = useState(false);
-
-  useEffect(() => {
-    // fetching API for testing
-    const fetchOrders = async () => {
-      try {
-        const res = await axios.get(
-          "https://my.api.mockaroo.com/users.json?key=5d7379a0"
-        );
-        setOrders(res.data);
-      } catch (error) {
-        console.error("Error in Fetching order:", error);
-      }
-    };
-    fetchOrders();
-  }, []);
+  const [editingOrderId, setEditingOrderId] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,7 +29,17 @@ function App() {
   };
 
   const handleCreateNew = () => {
-    setOrders((prevOrders) => [...prevOrders, newOrder]);
+    if (editingOrderId !== null) {
+      // If editing an existing order, update the order
+      const updatedOrders = orders.map((order) =>
+        order.id === editingOrderId ? newOrder : order
+      );
+      setOrders(updatedOrders);
+      setEditingOrderId(null);
+    } else {
+      // If creating a new order, add it to the list
+      setOrders((prevOrders) => [...prevOrders, newOrder]);
+    }
 
     setNewOrder({
       id: "",
@@ -63,6 +57,34 @@ function App() {
     setShowForm(false);
   };
 
+  const handleEdit = (order) => {
+    setNewOrder(order);
+    setShowForm(true);
+    setEditingOrderId(order.id);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingOrderId(null);
+    setNewOrder({
+      id: "",
+      shipify: "",
+      date: "",
+      status: "",
+      customer: "",
+      email: "",
+      county: "",
+      shipping: "",
+      source: "",
+      orderType: "",
+    });
+    setShowForm(false);
+  };
+
+  const handleDelete = (orderId) => {
+    const updatedOrders = orders.filter((order) => order.id !== orderId);
+    setOrders(updatedOrders);
+  };
+
   return (
     <div className="container">
       <div className="nav">
@@ -71,6 +93,11 @@ function App() {
           Create New
         </button>
       </div>
+      <NewOrderForm
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
+        onCreate={handleCreateNew}
+      />
       {showForm && (
         <div className="form-popup">
           <form className="form-container">
@@ -245,7 +272,12 @@ function App() {
         </div>
         <div>
           {orders.map((order) => (
-            <OrderSummary key={order.id} order={order} />
+            <OrderSummary
+              key={order.id}
+              order={order}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       </div>
