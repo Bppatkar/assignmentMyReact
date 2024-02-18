@@ -66,6 +66,7 @@ select {
   background-color: transparent;
 }
 .search {
+  margin-top: 25px;
   background-color: #2652ee;
   padding: 6px 14px;
   color: white;

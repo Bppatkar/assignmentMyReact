@@ -15,7 +15,7 @@ function OrderSummary({ order }) {
 
   const formatDate = (date) => {
     // Check if the date is valid
-    if (isNaN(Date.parse(date))) {
+    if (!date || isNaN(Date.parse(date))) {
       return "Invalid Date";
     }
     const options = { year: "numeric", month: "long", date: "numeric" };
@@ -38,16 +38,16 @@ function OrderSummary({ order }) {
   return (
     <div className="table_headers">
       <h3>{productName}</h3>
-      <p>ID {productId}</p>
-      <p>Shipify # {shipify}</p>
-      <p>Date {formatDate(creationDate)}</p>
-      <p>Status {getStatusText(status)}</p>
-      <p>Customer {customerName}</p>
-      <p>Email {email}</p>
-      <p>County {county}</p>
-      <p>Shipping: {shipping}</p>
-      <p>Source {source}</p>
-      <p>Order Type {orderType}</p>
+      <p>ID: {productId}</p>
+      <p>Shipify #: {shipify}</p>
+      <p>Date: {formatDate(creationDate)}</p>
+      <p>Status: {getStatusText(status)}</p>
+      <p>Customer: {customerName || "N/A"}</p>
+      <p>Email: {email || "N/A"}</p>
+      <p>County: {county || "N/A"}</p>
+      <p>Shipping: {shipping || "N/A"}</p>
+      <p>Source: {source || "N/A"}</p>
+      <p>Order Type: {orderType || "N/A"}</p>
     </div>
   );
 }

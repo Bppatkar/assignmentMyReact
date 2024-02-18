@@ -6,6 +6,18 @@ import OrderSummary from "./components/OrderSummary";
 
 function App() {
   const [orders, setOrder] = useState([]);
+  const [newOrder, setNewOrder] = useState({
+    id: "",
+    shipify: "",
+    date: "",
+    status: "",
+    customer: "",
+    email: "",
+    county: "",
+    shipping: "",
+    source: "",
+    orderType: "",
+  });
 
   useEffect(() => {
     // fetching API for testing
@@ -22,11 +34,39 @@ function App() {
     };
     fetchOrders();
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewOrder((prevOrder) => ({
+      ...prevOrder,
+      [name]: value,
+    }));
+  };
+
+  const handleCreateNew = () => {
+    setOrders((prevOrders) => [...prevOrders, newOrder]);
+
+    // Reset the newOrder state
+    setNewOrder({
+      id: "",
+      shipify: "",
+      date: "",
+      status: "",
+      customer: "",
+      email: "",
+      county: "",
+      shipping: "",
+      source: "",
+      orderType: "",
+    });
+  };
   return (
     <div className="container">
       <div className="nav">
         <h1 className="nav_heading">Orders</h1>
-        <button className="nav_button">Create New</button>
+        <button className="nav_button" onClick={handleCreateNew}>
+          Create New
+        </button>
       </div>
       <div className="hero_section">
         <div className="input_title">
@@ -36,19 +76,17 @@ function App() {
         <div className="category">
           <h3>Category</h3>
           <select name="category" id="">
-            <option>All</option>
-            <option>one</option>
-            <option>two</option>
-            <option>three</option>
+            <option>Manager</option>
+            <option>Admin</option>
+            <option>Customer</option>
           </select>
         </div>
         <div className="status">
           <h3>Status</h3>
           <select name="status" id="">
-            <option>All</option>
-            <option>one</option>
-            <option>two</option>
-            <option>three</option>
+            <option>Success</option>
+            <option>Pending</option>
+            <option>Reject</option>
           </select>
         </div>
 
