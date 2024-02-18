@@ -144,3 +144,34 @@ select {
   background-color: #2652ee;
   color: white;
 }
+.pagination_btn button {
+  background-color: #ffffff;
+  padding: 4px 4px;
+  color: #2652ee;
+  border-radius: 5px;
+  border: 1px solid #2652ee;
+  cursor: pointer;
+}
+
+.pagination_btn button.active {
+  background-color: #2652ee;
+  color: #ffffff;
+}
+
+.pagination_btn button:hover {
+  background-color: #f0f0f0;
+}
+
+.pagination_btn button:first-child,
+.pagination_btn button:last-child {
+  margin-right: 3px;
+}
+
+.pagination_btn button:not(:last-child) {
+  margin-right: 3px;
+}
+.table_headers {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}

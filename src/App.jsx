@@ -1,11 +1,27 @@
-// import OrderSummary from "./components/OrderSummary";
+import { useState } from "react";
 import "./App.css";
+import { useEffect } from "react";
+import axios from "axios";
+import OrderSummary from "./components/OrderSummary";
 
 function App() {
-  // const order = {
-  //   productName: "sample product",
-  //   productId: "12345",
-  // };
+  const [orders, setOrder] = useState([]);
+
+  useEffect(() => {
+    // fetching API for testing
+    const fetchOrders = async () => {
+      try {
+        const res = await axios.get(
+          "https://my.api.mockaroo.com/users.json?key=5d7379a0"
+        );
+        // console.log(res.data);
+        setOrder(res.data);
+      } catch (error) {
+        console.error("Error in Fetching order:", error);
+      }
+    };
+    fetchOrders();
+  }, []);
   return (
     <div className="container">
       <div className="nav">
@@ -61,18 +77,23 @@ function App() {
             <button>&gt;</button>
           </span>
         </div>
-        <div className="below_section">
-          <input type="checkbox" name="Id" id="" />
-          <label>Id</label>
-          <span>Shipify</span>
+
+        <div className="table_headers">
+          <span>ID</span>
+          <span>Shipify #</span>
           <span>Date</span>
           <span>Status</span>
           <span>Customer</span>
           <span>Email</span>
-          <span>Country</span>
-          <span>Shipping</span>
+          <span>County</span>
+          <span>Shipping:</span>
           <span>Source</span>
           <span>Order Type</span>
+        </div>
+        <div>
+          {orders.map((order) => (
+            <OrderSummary key={order.id} order={order} />
+          ))}
         </div>
       </div>
     </div>
