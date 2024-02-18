@@ -1,4 +1,6 @@
-function OrderSummary({ order }) {
+import { useState } from "react";
+
+const OrderSummary = ({ order }) => {
   const {
     productName,
     productId,
@@ -25,18 +27,23 @@ function OrderSummary({ order }) {
   const getStatusText = (status) => {
     switch (status) {
       case "Pending":
-        return "Order is pending approval";
+        return "Pending ";
       case "Processing":
-        return "Order is being processed";
-      case "Progress":
-        return "Order is in progress";
+        return "Processing";
+      case "Rejected":
+        return "Rejected";
       default:
-        return `Order status is ${status}`;
+        return "Success";
     }
+  };
+
+  const handleEdit = () => {
+    // Your logic to edit the order
   };
 
   return (
     <div className="table_headers">
+      <input type="checkbox" name="select" id="select" />
       <h3>{productName}</h3>
       <p>ID: {productId}</p>
       <p>Shipify #: {shipify}</p>
@@ -48,8 +55,9 @@ function OrderSummary({ order }) {
       <p>Shipping: {shipping || "N/A"}</p>
       <p>Source: {source || "N/A"}</p>
       <p>Order Type: {orderType || "N/A"}</p>
+      <button onClick={handleEdit}>Edit</button>
     </div>
   );
-}
+};
 
 export default OrderSummary;

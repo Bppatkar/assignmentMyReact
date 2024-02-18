@@ -179,10 +179,12 @@ select {
 
 /*  popup form */
 
+/* popup form */
+
+/* popup form */
 .form-popup {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  place-items: center; /* Center the form both horizontally and vertically */
   position: fixed;
   top: 0;
   left: 0;
@@ -190,33 +192,51 @@ select {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   z-index: 999; /* Ensure the form appears on top of other content */
+  overflow: auto; /* Enable scrolling for the form */
 }
 
 .form-container {
+  max-width: 50%; /* Adjusted maximum width for responsiveness */
+  width: 100%; /* Ensure the form takes up full width of its container */
+  max-height: 90vh; /* Set maximum height for scrolling */
   background-color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.form-container > * {
+  margin-bottom: 15px; /* Adjusted spacing between form sections */
+}
+
+.form-divider {
+  border-top: 2px solid #ccc; /* Horizontal line style */
+  width: 100%; /* Full width */
+  margin: 20px 0; /* Spacing */
 }
 
 .form-container label {
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 10px; /* Adjusted margin for labels */
 }
 
 .form-container input[type="text"],
-.form-container select {
-  width: calc(100% - 20px);
-  padding: 8px;
+.form-container select,
+.form-container input[type="email"] {
+  /* Apply size adjustment to email input */
+  width: 100%; /* Ensure inputs take up full width */
+  padding: 10px; /* Adjusted padding for input fields */
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-bottom: 10px;
 }
 
 .form-container button {
+  width: 100%; /* Ensure button takes up full width */
   background-color: #2652ee;
   color: white;
-  padding: 8px 16px;
+  padding: 10px; /* Adjusted padding for buttons */
   border: none;
   border-radius: 5px;
   cursor: pointer;

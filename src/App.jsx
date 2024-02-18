@@ -75,7 +75,7 @@ function App() {
         <div className="form-popup">
           <form className="form-container">
             <label htmlFor="id">ID:</label>
-            {/* Generate random 7-digit ID */}
+
             <input
               type="text"
               id="id"
@@ -84,7 +84,6 @@ function App() {
               readOnly // Make the ID field read-only
             />
 
-            {/* Shipify # */}
             <label htmlFor="shipify">Shipify #:</label>
             <input
               type="text"
@@ -94,7 +93,6 @@ function App() {
               onChange={handleInputChange}
             />
 
-            {/* Date */}
             <label htmlFor="date">Date:</label>
             <input
               type="date"
@@ -104,7 +102,6 @@ function App() {
               onChange={handleInputChange}
             />
 
-            {/* Status */}
             <label htmlFor="status">Status:</label>
             <select
               id="status"
@@ -114,10 +111,10 @@ function App() {
             >
               <option value="Success">Success</option>
               <option value="Pending">Pending</option>
+              <option value="Processing">Processing</option>
               <option value="Reject">Reject</option>
             </select>
 
-            {/* Customer */}
             <label htmlFor="customer">Customer:</label>
             <input
               type="text"
@@ -127,7 +124,6 @@ function App() {
               onChange={handleInputChange}
             />
 
-            {/* Email */}
             <label htmlFor="email">Email:</label>
             <input
               type="email"
@@ -137,7 +133,6 @@ function App() {
               onChange={handleInputChange}
             />
 
-            {/* County */}
             <label htmlFor="county">County:</label>
             <input
               type="text"
@@ -147,7 +142,6 @@ function App() {
               onChange={handleInputChange}
             />
 
-            {/* Shipping */}
             <label htmlFor="shipping">Shipping:</label>
             <input
               type="text"
@@ -157,7 +151,6 @@ function App() {
               onChange={handleInputChange}
             />
 
-            {/* Source */}
             <label htmlFor="source">Source:</label>
             <input
               type="text"
@@ -167,7 +160,6 @@ function App() {
               onChange={handleInputChange}
             />
 
-            {/* Order Type */}
             <label htmlFor="orderType">Order Type:</label>
             <input
               type="text"

@@ -27,6 +27,18 @@ const NewOrderForm = ({ isOpen, onClose, onCreate }) => {
     onCreate(formData);
   };
 
+  const handleDispatch = () => {
+    // Your logic to dispatch the selected orders
+  };
+
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: checked,
+    }));
+  };
+
   return isOpen ? (
     <div className="modal">
       <div className="modal-content">
@@ -36,8 +48,9 @@ const NewOrderForm = ({ isOpen, onClose, onCreate }) => {
         <h2>Create New Order</h2>
         <form onSubmit={handleSubmit}>
           {/* Your form fields here */}
-          <button type="submit">Submit</button>
+          <button type="submit">Create New</button>
         </form>
+        <button onClick={handleDispatch}>Dispatch</button>
       </div>
     </div>
   ) : null;
