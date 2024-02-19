@@ -1,22 +1,31 @@
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
-
 import PropTypes from "prop-types";
+import { useState } from "react";
 
 const OrderSummary = ({ order, onEdit, onDelete }) => {
   const {
     id,
     shipify,
+    date,
     status,
-    customerName,
+    customer,
     email,
     county,
     shipping,
     source,
-    creationDate,
     orderType,
   } = order;
 
+  const [isChecked, setIsChecked] = useState(false);
+
+  const toggleCheckbox = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const handleEdit = () => {
+    onEdit(order);
+  };
   const formatDate = (date) => {
     if (!date || isNaN(Date.parse(date))) {
       return "";
@@ -25,43 +34,36 @@ const OrderSummary = ({ order, onEdit, onDelete }) => {
     return new Date(date).toLocaleDateString("en-US", options);
   };
 
-  const getStatusText = (status) => {
-    switch (status) {
-      case "Pending":
-        return "Pending ";
-      case "Processing":
-        return "Processing";
-      case "Rejected":
-        return "Rejected";
-      default:
-        return "Success";
-    }
-  };
-
-  const handleEdit = () => {
-    onEdit(order);
-  };
-
   return (
-    <div className="output_data">
-      <input type="checkbox" name="select" id="select" />
-      <p>{id}</p>
-      <p>{shipify}</p>
-      <p>{formatDate(new Date(creationDate))}</p>
-      <p>{getStatusText(status)}</p>
-      <p>{customerName}</p>
-      <p>{email || "N/A"}</p>
-      <p>{county || "N/A"}</p>
-      <p>{shipping || "N/A"}</p>
-      <p>{source || "N/A"}</p>
-      <p>{orderType || "N/A"}</p>
-      <button onClick={handleEdit}>
-        <CiEdit />
-      </button>
-      <button onClick={() => onDelete(id)}>
-        <MdDelete />
-      </button>
-    </div>
+    <tr className={`output_data ${isChecked ? "checked" : ""}`}>
+      <td>
+        <input
+          type="checkbox"
+          name="select"
+          id={`select-${order.id}`}
+          checked={isChecked}
+          onChange={toggleCheckbox}
+        />
+      </td>
+      <td>{id.padStart(7, "0")}</td>
+      <td>{shipify.padStart(5, "0")}</td>
+      <td>{formatDate(date)}</td>
+      <td>{status}</td>
+      <td>{customer}</td>
+      <td>{email}</td>
+      <td>{county}</td>
+      <td>{shipping}</td>
+      <td>{source}</td>
+      <td>{orderType}</td>
+      <td>
+        <button className="edit_btn" onClick={() => onEdit(order)}>
+          <CiEdit />
+        </button>
+        <button className="dlt_btn" onClick={() => onDelete(id)}>
+          <MdDelete />
+        </button>
+      </td>
+    </tr>
   );
 };
 
@@ -69,14 +71,14 @@ OrderSummary.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.string.isRequired,
     shipify: PropTypes.string.isRequired,
+    date: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
-    customerName: PropTypes.string.isRequired,
-    email: PropTypes.string,
-    county: PropTypes.string,
-    shipping: PropTypes.string,
-    source: PropTypes.string,
-    creationDate: PropTypes.string.isRequired,
-    orderType: PropTypes.string,
+    customer: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    county: PropTypes.string.isRequired,
+    shipping: PropTypes.string.isRequired,
+    source: PropTypes.string.isRequired,
+    orderType: PropTypes.string.isRequired,
   }).isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

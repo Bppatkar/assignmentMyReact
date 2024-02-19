@@ -1,22 +1,25 @@
+/* Reset CSS */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Container */
 .container {
   padding: 20px;
 }
 
+/* Navigation */
 .nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .nav_heading {
   font-size: 30px;
   font-weight: 700;
-  margin-right: 10px;
 }
 
 .nav_button {
@@ -28,7 +31,7 @@
   cursor: pointer;
 }
 
-/* hero section start */
+/* Hero Section */
 .hero_section {
   display: flex;
   justify-content: space-between;
@@ -57,14 +60,10 @@ select {
   width: calc(100% - 20px);
   padding: 5px;
   border-radius: 5px;
-}
-.input_field {
-  width: calc(100% - 20px);
-  padding: 5px;
-  border-radius: 5px;
   border: 1px solid #ccc;
   background-color: transparent;
 }
+
 .search {
   margin-top: 25px;
   background-color: #2652ee;
@@ -75,7 +74,7 @@ select {
   cursor: pointer;
 }
 
-/* main section start */
+/* Main Section */
 .main_section {
   border-radius: 10px;
   margin-top: 22px;
@@ -115,130 +114,77 @@ select {
   cursor: pointer;
 }
 
-.below_section {
-  margin-top: 9px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.pagination_btn {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.pagination_btn input[type="checkbox"] {
-  margin-right: 5px;
-}
-
-.pagination_btn label {
-  margin-right: 10px;
-}
-
-.pagination_btn span {
-  white-space: nowrap;
-}
-
-.pagination_btn.active {
-  background-color: #2652ee;
-  color: white;
-}
-.pagination_btn button {
-  background-color: #ffffff;
-  padding: 4px 4px;
-  color: #2652ee;
-  border-radius: 5px;
-  border: 1px solid #2652ee;
-  cursor: pointer;
-}
-
-.pagination_btn button.active {
-  background-color: #2652ee;
-  color: #ffffff;
-}
-
-.pagination_btn button:hover {
-  background-color: #f0f0f0;
-}
-
-.pagination_btn button:first-child,
-.pagination_btn button:last-child {
-  margin-right: 3px;
-}
-
-.pagination_btn button:not(:last-child) {
-  margin-right: 3px;
-}
+/* Table Headers */
 .table_headers {
   margin-top: 15px;
   display: flex;
+  align-items: center;
   justify-content: space-around;
 }
 
-/*  popup form */
-
-/* popup form */
-
-/* popup form */
+/* Popup Form */
 .form-popup {
   display: grid;
-  place-items: center; /* Center the form both horizontally and vertically */
+  place-items: center;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-  z-index: 999; /* Ensure the form appears on top of other content */
-  overflow: auto; /* Enable scrolling for the form */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  overflow: auto;
 }
 
 .form-container {
-  max-width: 50%; /* Adjusted maximum width for responsiveness */
-  width: 100%; /* Ensure the form takes up full width of its container */
-  max-height: 90vh; /* Set maximum height for scrolling */
+  max-width: 50%;
+  width: 100%;
+  max-height: 90vh;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
-  overflow-y: auto; /* Enable vertical scrolling */
-}
-
-.form-container > * {
-  margin-bottom: 15px; /* Adjusted spacing between form sections */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
 .form-divider {
-  border-top: 2px solid #ccc; /* Horizontal line style */
-  width: 100%; /* Full width */
-  margin: 20px 0; /* Spacing */
+  border-top: 2px solid #ccc;
+  width: 100%;
+  margin: 20px 0;
 }
 
 .form-container label {
   display: block;
-  margin-bottom: 10px; /* Adjusted margin for labels */
+  margin-bottom: 10px;
 }
 
 .form-container input[type="text"],
 .form-container select,
 .form-container input[type="email"] {
-  /* Apply size adjustment to email input */
-  width: 100%; /* Ensure inputs take up full width */
-  padding: 10px; /* Adjusted padding for input fields */
+  width: 100%;
+  padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
   margin-bottom: 10px;
 }
 
 .form-container button {
-  width: 100%; /* Ensure button takes up full width */
+  width: 100%;
   background-color: #2652ee;
   color: white;
-  padding: 10px; /* Adjusted padding for buttons */
+  padding: 10px;
   border: none;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit_btn,
+.dlt_btn {
+  background-color: #2652ee;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -247,35 +193,49 @@ select {
   margin-left: 10px;
 }
 
-/* data */
-.output_data {
-  display: flex;
-  align-items: center; /* Align items vertically */
-  gap: 10px; /* Spacing between items */
+/* table */
+.data_table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.output_data input[type="checkbox"] {
-  margin-right: 10px; /* Add space between checkbox and text */
+.data_table th,
+.data_table td {
+  padding: 10px;
+  /* border: 1px solid #ccc; */
 }
 
-.output_data p {
-  margin: 0; /* Remove default margin */
-  flex: 1; /* Allow the text to grow and fill the available space */
+.data_table th {
+  /* background-color: #f2f2f2; */
 }
 
-.output_data button {
-  background-color: #2652ee; /* Button background color */
-  color: white; /* Button text color */
-  border: none; /* Remove button border */
-  padding: 8px 16px; /* Button padding */
-  border-radius: 5px; /* Button border radius */
-  cursor: pointer; /* Change cursor to pointer on hover */
+.data_table th,
+.data_table td {
+  text-align: left;
 }
 
-.output_data button:hover {
-  background-color: #1e40af; /* Darker background color on hover */
+/* Adjusting column widths */
+.data_table td:nth-child(1),
+.data_table th:nth-child(1) {
+  /* width: 10%; */
 }
 
-.output_data button:last-child {
-  margin-left: 10px; /* Add space between buttons */
+.data_table td:nth-child(2),
+.data_table th:nth-child(2) {
+  /* width: 10%; */
+}
+
+.data_table td:nth-child(6),
+.data_table th:nth-child(6) {
+  /* width: 20%; */
+}
+
+.data_table td:nth-child(10),
+.data_table th:nth-child(10) {
+  /* width: 15%; */
+}
+
+/* Checked style */
+.checked {
+  text-decoration: line-through;
 }

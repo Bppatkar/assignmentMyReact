@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import OrderSummary from "./components/OrderSummary";
 import PropTypes from "prop-types";
@@ -20,12 +20,46 @@ function App() {
   });
   const [showForm, setShowForm] = useState(false);
   const [editingOrderId, setEditingOrderId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10;
+
+  useEffect(() => {
+    // Loading data from local storage
+    const storedOrders = localStorage.getItem("orders");
+    if (storedOrders) {
+      setOrders(JSON.parse(storedOrders));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Saving data to local storage
+    localStorage.setItem("orders", JSON.stringify(orders));
+    // console.log("Orders saved to local storage:", orders);
+  }, [orders]);
+
+  useEffect(() => {
+    // Load data from local storage when component mounts
+    const savedOrders = localStorage.getItem("orders");
+    if (savedOrders) {
+      setOrders(JSON.parse(savedOrders));
+    }
+  }, []);
+  useEffect(() => {
+    setTotalPages(Math.ceil(orders.length / itemsPerPage));
+  }, [orders]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     let inputValue = value;
     if (name === "date") {
-      inputValue = new Date(value);
+      const formattedDate = value
+        .split("-")
+        .map((part) => {
+          return part.length === 1 ? `0${part}` : part;
+        })
+        .join("-");
+      inputValue = formattedDate;
     }
     setNewOrder((prevOrder) => ({
       ...prevOrder,
@@ -34,18 +68,29 @@ function App() {
   };
 
   const handleCreateNew = () => {
+    const updatedOrder = { ...newOrder }; // Create a copy of newOrder
+
+    // Generate a random 7-digit number if ID is not provided
+    if (!updatedOrder.id) {
+      updatedOrder.id = Math.floor(
+        1000000 + Math.random() * 9000000
+      ).toString();
+    }
+
+    // Update orders based on whether it's a new order or editing an existing one
     if (editingOrderId !== null) {
       // If editing an existing order, update the order
       const updatedOrders = orders.map((order) =>
-        order.id === editingOrderId ? newOrder : order
+        order.id === editingOrderId ? updatedOrder : order
       );
       setOrders(updatedOrders);
       setEditingOrderId(null);
     } else {
       // If creating a new order, add it to the list
-      setOrders((prevOrders) => [...prevOrders, newOrder]);
+      setOrders((prevOrders) => [...prevOrders, updatedOrder]);
     }
 
+    // Reset the newOrder state
     setNewOrder({
       id: "",
       shipify: "",
@@ -71,7 +116,17 @@ function App() {
   const handleDelete = (orderId) => {
     const updatedOrders = orders.filter((order) => order.id !== orderId);
     setOrders(updatedOrders);
+    // Save updated orders to local storage
+    localStorage.setItem("orders", JSON.stringify(updatedOrders));
   };
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = orders.slice(startIndex, endIndex);
 
   return (
     <div className="container">
@@ -246,28 +301,35 @@ function App() {
           </span>
         </div>
 
-        <div className="table_headers">
-          <span>ID</span>
-          <span>Shipify #</span>
-          <span>Date</span>
-          <span>Status</span>
-          <span>Customer</span>
-          <span>Email</span>
-          <span>County</span>
-          <span>Shipping:</span>
-          <span>Source</span>
-          <span>Order Type</span>
-        </div>
-        <div>
-          {orders.map((order) => (
-            <OrderSummary
-              key={order.id}
-              order={order}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          ))}
-        </div>
+        <table className="data_table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>ID</th>
+              <th>Shipify #</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Customer</th>
+              <th>Email</th>
+              <th>County</th>
+              <th>Shipping</th>
+              <th>Source</th>
+              <th>Order Type</th>
+              <th></th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders.map((order) => (
+              <OrderSummary
+                key={order.id}
+                order={order}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
