@@ -246,3 +246,36 @@ select {
   background-color: #ccc;
   margin-left: 10px;
 }
+
+/* data */
+.output_data {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  gap: 10px; /* Spacing between items */
+}
+
+.output_data input[type="checkbox"] {
+  margin-right: 10px; /* Add space between checkbox and text */
+}
+
+.output_data p {
+  margin: 0; /* Remove default margin */
+  flex: 1; /* Allow the text to grow and fill the available space */
+}
+
+.output_data button {
+  background-color: #2652ee; /* Button background color */
+  color: white; /* Button text color */
+  border: none; /* Remove button border */
+  padding: 8px 16px; /* Button padding */
+  border-radius: 5px; /* Button border radius */
+  cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.output_data button:hover {
+  background-color: #1e40af; /* Darker background color on hover */
+}
+
+.output_data button:last-child {
+  margin-left: 10px; /* Add space between buttons */
+}

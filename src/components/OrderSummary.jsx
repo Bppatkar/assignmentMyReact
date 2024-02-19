@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { CiEdit } from "react-icons/ci";
+import { MdDelete } from "react-icons/md";
 
-const OrderSummary = ({ order }) => {
+import PropTypes from "prop-types";
+
+const OrderSummary = ({ order, onEdit, onDelete }) => {
   const {
-    productName,
-    productId,
+    id,
     shipify,
     status,
     customerName,
@@ -16,11 +18,10 @@ const OrderSummary = ({ order }) => {
   } = order;
 
   const formatDate = (date) => {
-    // Check if the date is valid
     if (!date || isNaN(Date.parse(date))) {
-      return "Invalid Date";
+      return "";
     }
-    const options = { year: "numeric", month: "long", date: "numeric" };
+    const options = { day: "2-digit", month: "short", year: "numeric" };
     return new Date(date).toLocaleDateString("en-US", options);
   };
 
@@ -38,26 +39,47 @@ const OrderSummary = ({ order }) => {
   };
 
   const handleEdit = () => {
-    // Your logic to edit the order
+    onEdit(order);
   };
 
   return (
-    <div className="table_headers">
+    <div className="output_data">
       <input type="checkbox" name="select" id="select" />
-      <h3>{productName}</h3>
-      <p>ID: {productId}</p>
-      <p>Shipify #: {shipify}</p>
-      <p>Date: {formatDate(creationDate)}</p>
-      <p>Status: {getStatusText(status)}</p>
-      <p>Customer: {customerName || "N/A"}</p>
-      <p>Email: {email || "N/A"}</p>
-      <p>County: {county || "N/A"}</p>
-      <p>Shipping: {shipping || "N/A"}</p>
-      <p>Source: {source || "N/A"}</p>
-      <p>Order Type: {orderType || "N/A"}</p>
-      <button onClick={handleEdit}>Edit</button>
+      <p>{id}</p>
+      <p>{shipify}</p>
+      <p>{formatDate(new Date(creationDate))}</p>
+      <p>{getStatusText(status)}</p>
+      <p>{customerName}</p>
+      <p>{email || "N/A"}</p>
+      <p>{county || "N/A"}</p>
+      <p>{shipping || "N/A"}</p>
+      <p>{source || "N/A"}</p>
+      <p>{orderType || "N/A"}</p>
+      <button onClick={handleEdit}>
+        <CiEdit />
+      </button>
+      <button onClick={() => onDelete(id)}>
+        <MdDelete />
+      </button>
     </div>
   );
+};
+
+OrderSummary.propTypes = {
+  order: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    shipify: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    customerName: PropTypes.string.isRequired,
+    email: PropTypes.string,
+    county: PropTypes.string,
+    shipping: PropTypes.string,
+    source: PropTypes.string,
+    creationDate: PropTypes.string.isRequired,
+    orderType: PropTypes.string,
+  }).isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default OrderSummary;

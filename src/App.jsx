@@ -1,7 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 import OrderSummary from "./components/OrderSummary";
-import NewOrderForm from "./components/NewOrderFrom";
+import PropTypes from "prop-types";
+import NewOrderForm from "./components/NewOrderForm";
 
 function App() {
   const [orders, setOrders] = useState([]);
@@ -22,9 +23,13 @@ function App() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    let inputValue = value;
+    if (name === "date") {
+      inputValue = new Date(value);
+    }
     setNewOrder((prevOrder) => ({
       ...prevOrder,
-      [name]: value,
+      [name]: inputValue,
     }));
   };
 
@@ -63,23 +68,6 @@ function App() {
     setEditingOrderId(order.id);
   };
 
-  const handleCancelEdit = () => {
-    setEditingOrderId(null);
-    setNewOrder({
-      id: "",
-      shipify: "",
-      date: "",
-      status: "",
-      customer: "",
-      email: "",
-      county: "",
-      shipping: "",
-      source: "",
-      orderType: "",
-    });
-    setShowForm(false);
-  };
-
   const handleDelete = (orderId) => {
     const updatedOrders = orders.filter((order) => order.id !== orderId);
     setOrders(updatedOrders);
@@ -93,11 +81,9 @@ function App() {
           Create New
         </button>
       </div>
-      <NewOrderForm
-        isOpen={showForm}
-        onClose={() => setShowForm(false)}
-        onCreate={handleCreateNew}
-      />
+
+      <NewOrderForm />
+
       {showForm && (
         <div className="form-popup">
           <form className="form-container">
@@ -107,7 +93,9 @@ function App() {
               type="text"
               id="id"
               name="id"
-              value={Math.floor(1000000 + Math.random() * 9000000)} // Random 7-digit number
+              value={
+                newOrder.id || Math.floor(1000000 + Math.random() * 9000000)
+              } // Random 7-digit number
               readOnly // Make the ID field read-only
             />
 
@@ -284,5 +272,12 @@ function App() {
     </div>
   );
 }
+
+App.propTypes = {
+  isOpen: PropTypes.bool,
+  onClose: PropTypes.func,
+  onCreate: PropTypes.func,
+  newOrder: PropTypes.object,
+};
 
 export default App;
