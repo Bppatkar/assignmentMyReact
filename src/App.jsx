@@ -10,7 +10,7 @@ function App() {
     id: "",
     shipify: "",
     date: "",
-    status: "",
+    status: "Success",
     customer: "",
     email: "",
     county: "",
@@ -21,7 +21,6 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [editingOrderId, setEditingOrderId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 10;
 
   useEffect(() => {
@@ -36,17 +35,6 @@ function App() {
     // Saving data to local storage
     localStorage.setItem("orders", JSON.stringify(orders));
     // console.log("Orders saved to local storage:", orders);
-  }, [orders]);
-
-  useEffect(() => {
-    // Load data from local storage when component mounts
-    const savedOrders = localStorage.getItem("orders");
-    if (savedOrders) {
-      setOrders(JSON.parse(savedOrders));
-    }
-  }, []);
-  useEffect(() => {
-    setTotalPages(Math.ceil(orders.length / itemsPerPage));
   }, [orders]);
 
   const handleInputChange = (e) => {
@@ -68,34 +56,24 @@ function App() {
   };
 
   const handleCreateNew = () => {
-    const updatedOrder = { ...newOrder }; // Create a copy of newOrder
-
-    // Generate a random 7-digit number if ID is not provided
-    if (!updatedOrder.id) {
-      updatedOrder.id = Math.floor(
-        1000000 + Math.random() * 9000000
-      ).toString();
-    }
-
-    // Update orders based on whether it's a new order or editing an existing one
     if (editingOrderId !== null) {
       // If editing an existing order, update the order
       const updatedOrders = orders.map((order) =>
-        order.id === editingOrderId ? updatedOrder : order
+        order.id === editingOrderId ? newOrder : order
       );
       setOrders(updatedOrders);
       setEditingOrderId(null);
     } else {
       // If creating a new order, add it to the list
-      setOrders((prevOrders) => [...prevOrders, updatedOrder]);
+      setOrders((prevOrders) => [...prevOrders, newOrder]);
     }
 
-    // Reset the newOrder state
+    // Reset newOrder state
     setNewOrder({
       id: "",
       shipify: "",
       date: "",
-      status: "",
+      status: "Success",
       customer: "",
       email: "",
       county: "",
@@ -137,7 +115,13 @@ function App() {
         </button>
       </div>
 
-      <NewOrderForm />
+      <NewOrderForm
+        isOpen={showForm}
+        onClose={() => setShowForm(false)}
+        onCreate={handleCreateNew}
+        newOrder={newOrder}
+        onInputChange={handleInputChange}
+      />
 
       {showForm && (
         <div className="form-popup">
@@ -290,14 +274,30 @@ function App() {
             <option>three</option>
           </select>
           <button className="nav_button summary_btn">Dispatch Select</button>
-          <span className="pagination_btn ">
-            <button>&lt;</button>
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>...</button>
-            <button>10</button>
-            <button>&gt;</button>
+          <span className="pagination_btn">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              &lt;
+            </button>
+            {[...Array(Math.ceil(orders.length / itemsPerPage))].map(
+              (_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handlePageChange(index + 1)}
+                  className={currentPage === index + 1 ? "active" : ""}
+                >
+                  {index + 1}
+                </button>
+              )
+            )}
+            <button
+              disabled={currentPage === Math.ceil(orders.length / itemsPerPage)}
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              &gt;
+            </button>
           </span>
         </div>
 
@@ -330,6 +330,32 @@ function App() {
             ))}
           </tbody>
         </table>
+        {/* Pagination
+        <div className="pagination">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => handlePageChange(currentPage - 1)}
+          >
+            {"<"}
+          </button>
+          {[...Array(Math.ceil(orders.length / itemsPerPage))].map(
+            (_, index) => (
+              <button
+                key={index}
+                onClick={() => handlePageChange(index + 1)}
+                className={currentPage === index + 1 ? "active" : ""}
+              >
+                {index + 1}
+              </button>
+            )
+          )}
+          <button
+            disabled={currentPage === Math.ceil(orders.length / itemsPerPage)}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            {">"}
+          </button>
+        </div> */}
       </div>
     </div>
   );

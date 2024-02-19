@@ -114,6 +114,15 @@ select {
   cursor: pointer;
 }
 
+.pagination_btn button {
+  background-color: #2652ee;
+  color: white;
+  padding: 5px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
 /* Table Headers */
 .table_headers {
   margin-top: 15px;
